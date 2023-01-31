@@ -6,7 +6,7 @@ public abstract class Eintrag {
 
     private static int eintragsZähler = 0;
 
-    public static int getNächsteEintragsnummer(){
+    public static int getNächsteID(){
         eintragsZähler++;
         return eintragsZähler;
     }
