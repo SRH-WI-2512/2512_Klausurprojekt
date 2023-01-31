@@ -31,7 +31,7 @@ public class MainView extends View {
         setLayout(new BorderLayout());
         JPanel centerPanel = new JPanel(new GridLayout(3, 3));
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        this.add(new JLabel("Bücherverwaltung v3"), BorderLayout.NORTH);
+        this.add(new JLabel("Bücherverwaltung"), BorderLayout.NORTH);
         this.add(centerPanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
         addCenterComponents(centerPanel);
@@ -42,7 +42,7 @@ public class MainView extends View {
         bottomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         neueIDButton = new JButton("Neue ID anlegen");
         alleIDSAnzeigenButton = new JButton("Alle ID`s anzeigen");
-        autorÜbersichtButton = new JButton("Autorübersicht erstellen");
+        autorÜbersichtButton = new JButton("Autorübersicht");
         bottomPanel.add(neueIDButton);
         bottomPanel.add(alleIDSAnzeigenButton);
         bottomPanel.add(autorÜbersichtButton);
@@ -63,7 +63,8 @@ public class MainView extends View {
         centerPanel.add(nameTextfield);
         einträgeAnzeigenButton = new JButton("Einträge anzeigen");
         centerPanel.add(einträgeAnzeigenButton);
-
+        centerPanel.add(new JLabel(""));
+        centerPanel.add(new JLabel(""));
         idLöschenButton = new JButton("ID löschen");
         centerPanel.add( idLöschenButton);
 
