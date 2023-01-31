@@ -1,0 +1,11 @@
+Thema: Bücherverwaltung
+Klassen:
+     Autor:
+     Attribute: String=Name, int=Bücheranzahl, boolean=Bestsellerautor, String=Herkunft
+     Funktionen: Konstruktor, Getter für alle Attribute, Setter für Bücheranzahl+ Bestsellerautor
+
+
+     Buch:
+     Attribute: String=Titel, int=Seitenzahl, boolean=gelesenStatus, String=Genre, String=Autor, Double=Preis, Double= Gesamtwert
+     Funktionen: Konstruktor, Getter für alle Attribute, Setter für gelesenStatus+ Preis, static Methode für Gesamtwert
+
