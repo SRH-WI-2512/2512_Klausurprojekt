@@ -1,6 +1,7 @@
 package dao;
 
-import model.*;
+import model.Buch;
+import model.Autor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,77 +9,137 @@ import java.util.List;
 
 public class TempDAO implements BücherDAO {
 
-    private List<Eintrag> inmemoryDB = new ArrayList<>();
+    private List<Autor> autorDB = new ArrayList<>();
+    private List<Buch> buchDB = new ArrayList<>();
 
     public TempDAO() {
         /*TODO:
-            insertEintrag(new Autor());
-            insertEintrag(new Buch());
-            insertEintrag(new Autor());
-            insertEintrag(new Buch());
-            insertEintrag(new Autor());
-            insertEintrag(new Buch());
+            insertAutor(new Autor());
+            insertAutor(new Autor());
+            insertAutor(new Autor());
+            insertBuch(new Buch());
+            insertBuch(new Buch());
+            insertBuch(new Buch());
+            insertBuch(new Buch());
+            insertBuch(new Buch());
+            insertBuch(new Buch());
+
         */
 
     }
-    private int nächsteID() {
-        return Eintrag.getNächsteID();
+
+    private int nächsteAID() {
+        return Autor.getNächsteAID();
     }
-    private Eintrag searchEintrag(int id) {
-        for (Eintrag eintrag : inmemoryDB) {
-            if (eintrag.getId() == id)
-                return eintrag;
+
+    private int nächsteBID() {
+        return Buch.getNächsteBID();
+    }
+
+    private Buch searchBuch(int bID) {
+        for (Buch buch : buchDB) {
+            if (buch.getBuchID() == bID)
+                return buch;
+        }
+        return null;
+    }
+
+    private Autor searchAutor(int aID) {
+        for (Autor autor : autorDB) {
+            if (autor.getAutorID() == aID)
+                return autor;
         }
         return null;
     }
 
     @Override
-    public boolean insertEintrag(Eintrag e) {
-        if (e == null)
+    public boolean insertBuch(Buch buch) {
+        if (buch == null)
             return false;
-        if (searchEintrag(e.getId()) != null)
+        if (searchAutor(buch.getBuchID()) != null)
             return false;
-        inmemoryDB.add(e.clone());
+        buchDB.add(buch.clone());
         return true;
     }
 
     @Override
-    public Eintrag getEintragByID(int id) {
-        Eintrag e = searchEintrag(id);
-        if (e != null) return e.clone();
-        return null;
+    public boolean insertAutor(Autor autor) {
+        if (autor == null)
+            return false;
+        if (searchAutor(autor.getAutorID()) != null)
+            return false;
+        autorDB.add(autor.clone());
+        return true;
     }
 
     @Override
-    public List<Eintrag> getAllEinträge() {
-        List<Eintrag> copyList = new ArrayList<>(inmemoryDB.size());
-        for (Eintrag a : inmemoryDB)
-            copyList.add(a.clone());
+    public Autor getAutorByAID(int aID) {
+        Autor autor = searchAutor(aID);
+        if (autor != null) return autor.clone();
+        return null;
+    }
+    @Override
+    public Buch getBuchByBID(int bID) {
+        Buch buch = searchBuch(bID);
+        if (buch != null) return buch.clone();
+        return null;
+    }
+
+    public List<Buch> getAllBücher() {
+        List<Buch> copyList = new ArrayList<>(buchDB.size());
+        for (Buch buch : buchDB)
+            copyList.add(buch.clone());
         return copyList;
     }
 
     @Override
-    public boolean updateEintrag(int id, Eintrag e) {
-        deleteEintrag(id);
-        insertEintrag(e);
+    public List<Autor> getAllAutoren() {
+        List<Autor> copyList = new ArrayList<>(autorDB.size());
+        for (Autor autor : autorDB)
+            copyList.add(autor.clone());
+        return copyList;
+    }
+
+    public boolean updateBuch(int bID, Buch buch) {
+        deleteBuch(bID);
+        insertBuch(buch);
         return false;
     }
 
     @Override
-    public void deleteEintrag(int id) {
-        for (int i = 0; i < inmemoryDB.size(); i++) {
-            if (inmemoryDB.get(i).getId() == id) {
-                inmemoryDB.remove(i);
+    public boolean updateAutor(int aID, Autor autor) {
+        deleteAutor(aID);
+        insertAutor(autor);
+        return false;
+    }
+
+    public void deleteBuch(int bID) {
+        for (int i = 0; i < buchDB.size(); i++) {
+            if (buchDB.get(i).getBuchID() == bID) {
+                buchDB.remove(i);
                 break;
             }
         }
     }
 
     @Override
-    public int letzteAktuelleEintragsnummer() {
-        return Eintrag.getEintragsZähler();
+    public void deleteAutor(int aID) {
+        for (int i = 0; i < autorDB.size(); i++) {
+            if (autorDB.get(i).getAutorID() == aID) {
+                autorDB.remove(i);
+                break;
+            }
+        }
     }
 
+    @Override
+    public int letzteAktuelleAutorID() {
+        return Autor.getAutorZähler();
+    }
+
+    public int letzteAktuelleBuchID() {
+        return Buch.getBuchZähler();
+    }
 
 }
 

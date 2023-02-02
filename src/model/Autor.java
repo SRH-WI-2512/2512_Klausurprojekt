@@ -1,52 +1,50 @@
 package model;
 
-public class Autor extends Eintrag {
-    private int bücheranzahl;
+public class Autor  {
+    private int autorID;
+    private String name;
     private boolean bestsellerautor;
-    private String herkunftsland;
 
-    public Autor(int id ,String name, int bücheranzahl, boolean bestsellerautor, String herkunftsland) {
-        super(id, name);
-        this.bücheranzahl = bücheranzahl;
+    private static int autorZähler = 0;
+    public static int getAutorZähler() {
+        return autorZähler;
+    }
+
+    public Autor(int autorID, String name, boolean bestsellerautor) {
+        this.autorID = autorID;
+        this.name = name;
         this.bestsellerautor = bestsellerautor;
-        this.herkunftsland = herkunftsland;
     }
 
-
-    public int getBücheranzahl() {
-        return bücheranzahl;
+    public static void setAutorZähler(int autorZähler) {
+        if(autorZähler < 0) autorZähler = 0;
+        Autor.autorZähler = autorZähler;
     }
-
+    public static int getNächsteAID(){
+        autorZähler++;
+        return autorZähler;
+    }
+    public int getAutorID() {
+        return autorID;
+    }
+    public String getName() {
+        return name;
+    }
     public boolean isBestsellerautor() {
         return bestsellerautor;
-    }
-
-    public String getHerkunftsland() {
-        return herkunftsland;
-    }
-
-    public void setBücheranzahl(int bücheranzahl) {
-        this.bücheranzahl = bücheranzahl;
     }
 
     public void setBestsellerautor(boolean bestsellerautor) {
         this.bestsellerautor = bestsellerautor;
     }
-//    @Override
-//    public String toString() {
-//        return bestsellerautor + " (" + bücheranzahl + ") " + " (" + herkunftsland + ")";
-//    }
-
+    public Autor clone(){
+        return new Autor(getAutorID(), getName(),isBestsellerautor());
+    }
     @Override
     public String toString() {
-        return super.toString() +
-                ", bücheranzahl='" + bücheranzahl + '\'' +
-                ", bestsellerautor='" + bestsellerautor + '\'' +
-                ", herkunftsland=" + herkunftsland +
+        return "autorID=" + autorID +
+                ", name='" + name + '\'' +
+                ", bestsellerautor=" + bestsellerautor +
                 '}';
     }
-
-    public Eintrag clone(){
-        return new Autor(getId(), getName(), getBücheranzahl(), isBestsellerautor(), getHerkunftsland());
-    };
 }

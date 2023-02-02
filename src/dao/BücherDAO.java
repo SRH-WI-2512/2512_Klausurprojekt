@@ -1,25 +1,32 @@
 package dao;
 
-import model.Eintrag;
-
+import model.Autor;
+import model.Buch;
 import java.util.List;
 
 public interface BücherDAO {
 
     // Create
-    public boolean insertEintrag(Eintrag a);
+    public boolean insertAutor(Autor autor);
+    public boolean insertBuch(Buch buch);
+
+
 
     // Read
-    public Eintrag getEintragByID(int id);
-    public List<Eintrag> getAllEinträge();
+    public Autor getAutorByAID(int aID);
+    public Buch getBuchByBID(int bID);
+    public List<Autor> getAllAutoren();
+    public List<Buch> getAllBücher();
 
     // Update
-    public boolean updateEintrag(int id, Eintrag a);
-
+    public boolean updateAutor(int aID, Autor autor);
+    public boolean updateBuch(int bID, Buch buch);
     // Delete
-    public void deleteEintrag(int id);
+    public void deleteAutor(int aID);
+    public void deleteBuch(int bID);
     // Management
-    public int letzteAktuelleEintragsnummer();
+    public int letzteAktuelleAutorID();
+    public int letzteAktuelleBuchID();
 
 
 }

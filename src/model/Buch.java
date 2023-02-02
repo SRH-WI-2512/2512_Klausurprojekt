@@ -1,28 +1,38 @@
 package model;
 
-public class Buch extends Eintrag{
-    private String genre,autor;
-    private int seitenzahl;
+public class Buch{
+    private int buchID;
+    private Autor autor;
+    private String titel;
     private double preis;
     private boolean gelesen;
-    public static double gesamtwert;
+    private static int buchZähler = 0;
 
-    public Buch(int id, String name, String genre, String autor, int seitenzahl, double preis, boolean gelesen) {
-        super(id, name);
-        this.genre = genre;
+    public Buch(int buchID, String titel ,Autor autor, double preis, boolean gelesen) {
+        this.buchID = buchID;
         this.autor = autor;
-        this.seitenzahl = seitenzahl;
+        this.titel = titel;
         this.preis = preis;
         this.gelesen = gelesen;
-        erhöheGesamtwert(preis);
-    }
-    private void erhöheGesamtwert(double preis){
-        gesamtwert += preis;
-    }
-    public void verringereGesamtwert(double preis){
-        gesamtwert -= preis;
     }
 
+    public static int getBuchZähler(){
+        return buchZähler;
+    }
+    public static void setBuchZähler(int buchZähler) {
+        if(buchZähler < 0) buchZähler = 0;
+        Buch.buchZähler = buchZähler;
+    }
+    public static int getNächsteBID() {
+        buchZähler++;
+        return buchZähler;
+    }
+    public int getBuchID(){
+        return buchID;
+    }
+    public String getTitel() {
+        return titel;
+    }
     public void setGelesen(boolean gelesen) {
         this.gelesen = gelesen;
     }
@@ -35,39 +45,20 @@ public class Buch extends Eintrag{
         return gelesen;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public String getAutor() {
+    public Autor getAutor() {
         return autor;
-    }
-
-    public int getSeitenzahl() {
-        return seitenzahl;
     }
 
     public double getPreis() {
         return preis;
     }
 
-    public static double getGesamtwert() {
-        return gesamtwert;
+    public Buch clone() {
+        return new Buch(getBuchID(), getTitel(), getAutor(), getPreis(), isGelesen());
     }
 
-    @Override
-    public String toString() {
-        return super.toString() +
-                ", genre='" + genre + '\'' +
-                ", autor='" + autor + '\'' +
-                ", seitenzahl=" + seitenzahl +
-                ", preis=" + preis +
-                ", gelesen=" + gelesen +
-                '}';
-    }
-    public Eintrag clone(){
-        return new Buch(getId(), getName(), getGenre(), getAutor(), getSeitenzahl(), getPreis(), isGelesen());
-    };
+
+
 
 
 
