@@ -63,7 +63,7 @@ public class TempDAO implements BücherAutorDAO {
     public boolean insertBuch(Buch buch) {
         if (buch == null)
             return false;
-        if (searchAutor(buch.getBuchID()) != null)
+        if (searchBuch(buch.getBuchID()) != null)
             return false;
         buchDB.add( buch.clone() );
         return true;

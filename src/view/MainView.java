@@ -6,19 +6,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MainView extends View {
-
-    private JButton neueIDButton;
-    private JButton alleIDSAnzeigenButton;
-    private JButton autorÜbersichtButton;
-    private JButton idAnzeigenButton;
-    private JTextField idTextfield;
-    private JTextField nameTextfield;
-    private JTextField kontostandTextfield;
-    private JButton einträgeAnzeigenButton;
-    private JButton idLöschenButton;
-    private JTextField gesamtwertTextfield;
-    private JButton eintragLöschenButton;
-    private JButton zinsenZuschlagenButton;
+    private JButton anzeigenButton;
+    private JTextField buchnummerFeld;
+    private JTextField buchtitelFeld;
+    private JTextField autorFeld;
+    private JTextField preisFeld;
+    private JCheckBox gelesenBox;
 
     public MainView() {
         super("Bücherverwaltung");
@@ -28,9 +21,9 @@ public class MainView extends View {
     }
 
     private void addComponents() {
-        setLayout(new BorderLayout());
-        JPanel centerPanel = new JPanel(new GridLayout(3, 3));
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        setLayout( new BorderLayout() );
+        JPanel centerPanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
         this.add(new JLabel("Bücherverwaltung"), BorderLayout.NORTH);
         this.add(centerPanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
@@ -39,54 +32,64 @@ public class MainView extends View {
     }
 
     private void addButtons(JPanel bottomPanel) {
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        neueIDButton = new JButton("Neue ID anlegen");
-        alleIDSAnzeigenButton = new JButton("Alle ID`s anzeigen");
-        autorÜbersichtButton = new JButton("Autorübersicht");
-        bottomPanel.add(neueIDButton);
-        bottomPanel.add(alleIDSAnzeigenButton);
-        bottomPanel.add(autorÜbersichtButton);
+
+        anzeigenButton = new JButton("Anzeigen");
+        JButton beendenButton = new JButton("Beenden");
+        bottomPanel.add(anzeigenButton);
+        bottomPanel.add(beendenButton);
     }
 
     private void addCenterComponents(JPanel centerPanel) {
+        centerPanel.setLayout(new GridLayout(5, 2));
         centerPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        idAnzeigenButton = new JButton("Eintrag anzeigen");
-        idTextfield = new JTextField();
+        buchnummerFeld = new JTextField();
+        buchtitelFeld = new JTextField();
+        autorFeld = new JTextField();
+        preisFeld = new JTextField();
+        gelesenBox = new JCheckBox("Gelesen");
 
-        centerPanel.add(new JLabel("ID"));
-        centerPanel.add(idTextfield);
-        centerPanel.add(idAnzeigenButton);
-
-        nameTextfield = new JTextField();
-        centerPanel.add(new JLabel("Autor/Buchtitel"));
-        centerPanel.add(nameTextfield);
-        einträgeAnzeigenButton = new JButton("Einträge anzeigen");
-        centerPanel.add(einträgeAnzeigenButton);
-        centerPanel.add(new JLabel(""));
-        centerPanel.add(new JLabel(""));
-        idLöschenButton = new JButton("ID löschen");
-        centerPanel.add( idLöschenButton);
-
+        centerPanel.add(new JLabel("Buchnummer:"));
+        centerPanel.add( buchnummerFeld );
+        centerPanel.add(new JLabel("Buchtitel:"));
+        centerPanel.add( buchtitelFeld );
+        centerPanel.add(new JLabel("Autor:"));
+        centerPanel.add( autorFeld );
+        centerPanel.add(new JLabel("Preis:"));
+        centerPanel.add( preisFeld );
+        centerPanel.add(new JLabel() ); // Platzhalter
+        centerPanel.add( gelesenBox );
     }
 
-    public void setIdLöschenButtonListener(ActionListener listener){
-        idLöschenButton.addActionListener(listener);
+    public int getBuchnummer() {
+        return Integer.parseInt( buchnummerFeld.getText() );
     }
 
-    public void setNeueIDButtonListener(ActionListener listener){
-        neueIDButton.addActionListener(listener);
+    public void setBuchnummer(int buchnummer) {
+        buchnummerFeld.setText( Integer.toString(buchnummer) );
     }
 
-    public void setAlleIDSAnzeigenButtonListener(ActionListener listener){
-        alleIDSAnzeigenButton.addActionListener(listener);
+    public void setBuchtitel(String titel) {
+        buchtitelFeld.setText(titel);
     }
 
-    public void setIdAnzeigenButtonListener(ActionListener listener){
-        idAnzeigenButton.addActionListener(listener);
+    public void setAutor(String autor) {
+        autorFeld.setText(autor);
     }
 
+    public void setPreis(double preis) {
+        preisFeld.setText( Double.toString(preis) );
+    }
 
+    public void setGelesen(boolean gelesen) {
+        gelesenBox.setSelected(gelesen);
+    }
+
+    public void setAnzeigenButtonListener(ActionListener listener) {
+        anzeigenButton.addActionListener(listener);
+    }
 
     public static void main(String[] args) {
         new MainView();
