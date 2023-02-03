@@ -7,46 +7,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TempDAO implements BücherDAO {
+public class TempDAO implements BücherAutorDAO {
 
     private List<Autor> autorDB = new ArrayList<>();
     private List<Buch> buchDB = new ArrayList<>();
 
+    private static int letzteVergebeneBuchID = 0;
+    private static int letzteVergebeneAutorID = 0;
+
+
     public TempDAO() {
-        /*TODO:
-            insertAutor(new Autor());
-            insertAutor(new Autor());
-            insertAutor(new Autor());
-            insertBuch(new Buch());
-            insertBuch(new Buch());
-            insertBuch(new Buch());
-            insertBuch(new Buch());
-            insertBuch(new Buch());
-            insertBuch(new Buch());
+        Autor a1 = new Autor( nächsteAutorID(), "Jack London" );
+        Autor a2 = new Autor( nächsteAutorID(), "Astrid Lindgren" );
+        Autor a3 = new Autor( nächsteAutorID(), "E.T.A. Hoffmann" );
 
-        */
+        insertAutor(a1);
+        insertAutor(a2);
+        insertAutor(a3);
 
+        insertBuch( new Buch(nächsteBuchID(), "Wolfsblut", a1, 9.99, false) );
+        insertBuch( new Buch(nächsteBuchID(), "Der Seewolf", a1, 12.98, true) );
+        insertBuch( new Buch(nächsteBuchID(), "Wir Kinder aus Bullerbü", a2, 7.49, false) );
+        insertBuch( new Buch(nächsteBuchID(), "Karlson vom Dach", a2, 5.66, true) );
+        insertBuch( new Buch(nächsteBuchID(), "Der Sandmann", a3, 29.45, false) );
+        insertBuch( new Buch(nächsteBuchID(), "Das fremde Kind", a3, 36.80, true) );
     }
 
-    private int nächsteAID() {
-        return Autor.getNächsteAID();
+    private int nächsteAutorID() {
+        ++letzteVergebeneAutorID;
+        return letzteVergebeneAutorID;
     }
 
-    private int nächsteBID() {
-        return Buch.getNächsteBID();
+    private int nächsteBuchID() {
+        ++letzteVergebeneBuchID;
+        return letzteVergebeneBuchID;
     }
 
-    private Buch searchBuch(int bID) {
+    private Buch searchBuch(int buchID) {
         for (Buch buch : buchDB) {
-            if (buch.getBuchID() == bID)
+            if (buch.getBuchID() == buchID)
                 return buch;
         }
         return null;
     }
 
-    private Autor searchAutor(int aID) {
+    private Autor searchAutor(int autorID) {
         for (Autor autor : autorDB) {
-            if (autor.getAutorID() == aID)
+            if (autor.getAutorID() == autorID)
                 return autor;
         }
         return null;
@@ -58,7 +65,7 @@ public class TempDAO implements BücherDAO {
             return false;
         if (searchAutor(buch.getBuchID()) != null)
             return false;
-        buchDB.add(buch.clone());
+        buchDB.add( buch.clone() );
         return true;
     }
 
@@ -68,19 +75,29 @@ public class TempDAO implements BücherDAO {
             return false;
         if (searchAutor(autor.getAutorID()) != null)
             return false;
-        autorDB.add(autor.clone());
+        autorDB.add( autor.clone() );
         return true;
     }
 
     @Override
-    public Autor getAutorByAID(int aID) {
-        Autor autor = searchAutor(aID);
+    public Autor getAutorByID(int autorID) {
+        Autor autor = searchAutor(autorID);
         if (autor != null) return autor.clone();
         return null;
     }
+
     @Override
-    public Buch getBuchByBID(int bID) {
-        Buch buch = searchBuch(bID);
+    public int getIDByAutorName(String name) {
+        for (Autor autor : autorDB) {
+            if (autor.getName().equals(name))
+                return autor.getAutorID();
+        }
+        return 0;
+    }
+
+    @Override
+    public Buch getBuchByID(int buchID) {
+        Buch buch = searchBuch(buchID);
         if (buch != null) return buch.clone();
         return null;
     }
@@ -100,22 +117,22 @@ public class TempDAO implements BücherDAO {
         return copyList;
     }
 
-    public boolean updateBuch(int bID, Buch buch) {
-        deleteBuch(bID);
+    public boolean updateBuch(int buchID, Buch buch) {
+        deleteBuch(buchID);
         insertBuch(buch);
         return false;
     }
 
     @Override
-    public boolean updateAutor(int aID, Autor autor) {
-        deleteAutor(aID);
+    public boolean updateAutor(int autorID, Autor autor) {
+        deleteAutor(autorID);
         insertAutor(autor);
         return false;
     }
 
-    public void deleteBuch(int bID) {
+    public void deleteBuch(int buchID) {
         for (int i = 0; i < buchDB.size(); i++) {
-            if (buchDB.get(i).getBuchID() == bID) {
+            if (buchDB.get(i).getBuchID() == buchID) {
                 buchDB.remove(i);
                 break;
             }
@@ -123,9 +140,9 @@ public class TempDAO implements BücherDAO {
     }
 
     @Override
-    public void deleteAutor(int aID) {
+    public void deleteAutor(int autorID) {
         for (int i = 0; i < autorDB.size(); i++) {
-            if (autorDB.get(i).getAutorID() == aID) {
+            if (autorDB.get(i).getAutorID() == autorID) {
                 autorDB.remove(i);
                 break;
             }
@@ -134,11 +151,11 @@ public class TempDAO implements BücherDAO {
 
     @Override
     public int letzteAktuelleAutorID() {
-        return Autor.getAutorZähler();
+        return letzteVergebeneAutorID;
     }
 
     public int letzteAktuelleBuchID() {
-        return Buch.getBuchZähler();
+        return letzteVergebeneBuchID;
     }
 
 }

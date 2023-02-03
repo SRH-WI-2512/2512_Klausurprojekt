@@ -1,14 +1,19 @@
 package model;
 
-public class Buch{
+/*
+ * S O L I D
+ * |
+ * + Single Responsibility Principle
+ */
+
+public class Buch {
     private int buchID;
     private Autor autor;
     private String titel;
     private double preis;
     private boolean gelesen;
-    private static int buchZähler = 0;
 
-    public Buch(int buchID, String titel ,Autor autor, double preis, boolean gelesen) {
+    public Buch(int buchID, String titel, Autor autor, double preis, boolean gelesen) {
         this.buchID = buchID;
         this.autor = autor;
         this.titel = titel;
@@ -16,23 +21,14 @@ public class Buch{
         this.gelesen = gelesen;
     }
 
-    public static int getBuchZähler(){
-        return buchZähler;
-    }
-    public static void setBuchZähler(int buchZähler) {
-        if(buchZähler < 0) buchZähler = 0;
-        Buch.buchZähler = buchZähler;
-    }
-    public static int getNächsteBID() {
-        buchZähler++;
-        return buchZähler;
-    }
     public int getBuchID(){
         return buchID;
     }
+
     public String getTitel() {
         return titel;
     }
+
     public void setGelesen(boolean gelesen) {
         this.gelesen = gelesen;
     }
@@ -56,10 +52,4 @@ public class Buch{
     public Buch clone() {
         return new Buch(getBuchID(), getTitel(), getAutor(), getPreis(), isGelesen());
     }
-
-
-
-
-
-
 }
