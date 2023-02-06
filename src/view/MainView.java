@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MainView extends View {
-    private JButton anzeigenButton;
+    private JButton anzeigenButton, speichernButton;
     private JTextField buchnummerFeld;
     private JTextField buchtitelFeld;
     private JTextField autorFeld;
@@ -36,8 +36,11 @@ public class MainView extends View {
         bottomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         anzeigenButton = new JButton("Anzeigen");
+        speichernButton = new JButton("Speichern");
         JButton beendenButton = new JButton("Beenden");
+        beendenButton.addActionListener( (e) -> dispose() );
         bottomPanel.add(anzeigenButton);
+        bottomPanel.add(speichernButton);
         bottomPanel.add(beendenButton);
     }
 
@@ -75,20 +78,55 @@ public class MainView extends View {
         buchtitelFeld.setText(titel);
     }
 
+    public String getBuchtitel() {
+        return buchtitelFeld.getText();
+    }
+
     public void setAutor(String autor) {
         autorFeld.setText(autor);
+    }
+
+    public String getAutor() {
+        return autorFeld.getText();
     }
 
     public void setPreis(double preis) {
         preisFeld.setText( Double.toString(preis) );
     }
 
+    public double getPreis() {
+        return Double.parseDouble( preisFeld.getText() );
+    }
+
     public void setGelesen(boolean gelesen) {
         gelesenBox.setSelected(gelesen);
     }
 
+    public boolean istGelesen() {
+        return gelesenBox.isSelected();
+    }
+
     public void setAnzeigenButtonListener(ActionListener listener) {
         anzeigenButton.addActionListener(listener);
+    }
+
+    public void setSpeichernButtonListener(ActionListener listener) {
+        speichernButton.addActionListener(listener);
+    }
+
+    public void zeigeFehlermeldung(String message) {
+        JOptionPane.showMessageDialog(this, message, "Fehler", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public boolean zeigeRückfrage(String message){
+        return
+                JOptionPane.showConfirmDialog(this, message, "Bestätigung",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
+
+    }
+
+    public void zeigeMeldung(String message){
+        JOptionPane.showMessageDialog(this, message, "Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void main(String[] args) {

@@ -12,8 +12,8 @@ public class TempDAO implements BücherAutorDAO {
     private List<Autor> autorDB = new ArrayList<>();
     private List<Buch> buchDB = new ArrayList<>();
 
-    private static int letzteVergebeneBuchID = 0;
-    private static int letzteVergebeneAutorID = 0;
+    private int letzteVergebeneBuchID = 0;
+    private int letzteVergebeneAutorID = 0;
 
 
     public TempDAO() {
@@ -33,12 +33,12 @@ public class TempDAO implements BücherAutorDAO {
         insertBuch( new Buch(nächsteBuchID(), "Das fremde Kind", a3, 36.80, true) );
     }
 
-    private int nächsteAutorID() {
+    public int nächsteAutorID() {
         ++letzteVergebeneAutorID;
         return letzteVergebeneAutorID;
     }
 
-    private int nächsteBuchID() {
+    public int nächsteBuchID() {
         ++letzteVergebeneBuchID;
         return letzteVergebeneBuchID;
     }
@@ -119,15 +119,13 @@ public class TempDAO implements BücherAutorDAO {
 
     public boolean updateBuch(int buchID, Buch buch) {
         deleteBuch(buchID);
-        insertBuch(buch);
-        return false;
+        return insertBuch(buch);
     }
 
     @Override
     public boolean updateAutor(int autorID, Autor autor) {
         deleteAutor(autorID);
-        insertAutor(autor);
-        return false;
+        return insertAutor(autor);
     }
 
     public void deleteBuch(int buchID) {

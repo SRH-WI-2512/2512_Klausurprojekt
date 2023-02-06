@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface BücherAutorDAO {
 
+    public int nächsteAutorID();
+
+    public int nächsteBuchID();
+
     // Create
     public boolean insertAutor(Autor autor);
     public boolean insertBuch(Buch buch);
