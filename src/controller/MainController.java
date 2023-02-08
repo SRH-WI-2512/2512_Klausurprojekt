@@ -7,8 +7,12 @@ import model.Buch;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainController {
+
+    private final Logger logger = Logger.getLogger("Main");
 
     private final BücherAutorDAO bücherAutorDB;
     private final MainView mainView;
@@ -16,6 +20,8 @@ public class MainController {
     public MainController(BücherAutorDAO bücherAutorDB, MainView mainView) {
         this.bücherAutorDB = bücherAutorDB;
         this.mainView = mainView;
+
+        //logger.setLevel(Level.OFF);
 
         mainView.setAnzeigenButtonListener( this::performAnzeigen );
         mainView.setSpeichernButtonListener( this::performSpeichern );
@@ -61,13 +67,13 @@ public class MainController {
         int autorID = bücherAutorDB.getIDByAutorName(autorname);
         if (autorID > 0) {
             autor = bücherAutorDB.getAutorByID(autorID);
-            System.out.println("Autor " + autorname + " gefunden: " + autorID);
+            logger.info("Autor " + autorname + " gefunden: " + autorID);
         }
         else {
             autor = new Autor( bücherAutorDB.nächsteAutorID(), autorname );
             bücherAutorDB.insertAutor(autor);
-            System.out.println("Autor " + autorname + " nicht gefunden, neue ID: " +
-                    autor.getAutorID());
+            logger.info("Autor " + autorname + " nicht gefunden, neue ID: " +
+                        autor.getAutorID());
         }
 
         return new Buch(buchnummer, buchtitel, autor, preis, gelesen);
