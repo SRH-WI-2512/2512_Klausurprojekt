@@ -19,8 +19,6 @@ public class MainController {
         this.bücherAutorDB = bücherAutorDB;
         this.mainView = mainView;
 
-        //logger.setLevel(Level.OFF);
-
         mainView.setAnzeigenButtonListener( this::performAnzeigen );
         mainView.setSpeichernButtonListener( this::performSpeichern );
     }
@@ -76,8 +74,14 @@ public class MainController {
 
     private void performAnzeigen(ActionEvent actionEvent) {
         int buchnummer = mainView.getBuchnummer();
-        Buch buch = bücherAutorDB.getBuchByID(buchnummer);
-        zeigeBuch(buch);
+        if (buchnummer > 0) {
+            Buch buch = bücherAutorDB.getBuchByID(buchnummer);
+            if (buch != null) {
+                zeigeBuch(buch);
+                return;
+            }
+        }
+        leereBuch();
     }
 
     private void zeigeBuch(Buch buch) {
@@ -86,6 +90,14 @@ public class MainController {
         mainView.setAutor( buch.getAutor().getName() );
         mainView.setPreis( buch.getPreis() );
         mainView.setGelesen( buch.isGelesen() );
+    }
+
+    private void leereBuch() {
+        mainView.setBuchnummer( 0 );
+        mainView.setBuchtitel( "" );
+        mainView.setAutor( "" );
+        mainView.setPreis( 0.0 );
+        mainView.setGelesen( false );
     }
 
     public static void main(String[] args) {

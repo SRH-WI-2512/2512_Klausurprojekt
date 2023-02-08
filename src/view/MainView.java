@@ -1,9 +1,12 @@
 package view;
 
+import controller.Tools;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 public class MainView extends View {
     private JButton anzeigenButton, speichernButton;
@@ -67,11 +70,13 @@ public class MainView extends View {
     }
 
     public int getBuchnummer() {
-        return Integer.parseInt( buchnummerFeld.getText() );
+        if ( ! Tools.checkInteger(buchnummerFeld.getText()) )
+            zeigeFehlermeldung("Ungültiges Zahlenformat für die Buchnummer");
+        return Tools.toInteger( buchnummerFeld.getText() );
     }
 
     public void setBuchnummer(int buchnummer) {
-        buchnummerFeld.setText( Integer.toString(buchnummer) );
+        buchnummerFeld.setText( Tools.integerToString(buchnummer) );
     }
 
     public void setBuchtitel(String titel) {
@@ -91,11 +96,13 @@ public class MainView extends View {
     }
 
     public void setPreis(double preis) {
-        preisFeld.setText( Double.toString(preis) );
+        preisFeld.setText( Tools.doubleToString(preis) );
     }
 
     public double getPreis() {
-        return Double.parseDouble( preisFeld.getText() );
+        if ( ! Tools.checkDouble(preisFeld.getText()) )
+            zeigeFehlermeldung("Ungültiges Zahlenformat");
+        return Tools.toDouble(preisFeld.getText());
     }
 
     public void setGelesen(boolean gelesen) {
@@ -118,14 +125,14 @@ public class MainView extends View {
         JOptionPane.showMessageDialog(this, message, "Fehler", JOptionPane.ERROR_MESSAGE);
     }
 
-    public boolean zeigeRückfrage(String message){
+    public boolean zeigeRückfrage(String message) {
         return
                 JOptionPane.showConfirmDialog(this, message, "Bestätigung",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
 
     }
 
-    public void zeigeMeldung(String message){
+    public void zeigeMeldung(String message) {
         JOptionPane.showMessageDialog(this, message, "Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
