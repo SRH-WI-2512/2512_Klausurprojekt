@@ -12,8 +12,6 @@ import java.util.logging.Logger;
 
 public class MainController {
 
-    private final Logger logger = Logger.getLogger("Main");
-
     private final BücherAutorDAO bücherAutorDB;
     private final MainView mainView;
 
@@ -67,13 +65,10 @@ public class MainController {
         int autorID = bücherAutorDB.getIDByAutorName(autorname);
         if (autorID > 0) {
             autor = bücherAutorDB.getAutorByID(autorID);
-            logger.info("Autor " + autorname + " gefunden: " + autorID);
         }
         else {
             autor = new Autor( bücherAutorDB.nächsteAutorID(), autorname );
             bücherAutorDB.insertAutor(autor);
-            logger.info("Autor " + autorname + " nicht gefunden, neue ID: " +
-                        autor.getAutorID());
         }
 
         return new Buch(buchnummer, buchtitel, autor, preis, gelesen);
