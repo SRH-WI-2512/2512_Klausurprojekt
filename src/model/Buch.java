@@ -6,6 +6,8 @@ package model;
  * + Single Responsibility Principle
  */
 
+import java.text.DecimalFormat;
+
 public class Buch {
     private int buchID;
     private Autor autor;
@@ -47,6 +49,14 @@ public class Buch {
 
     public double getPreis() {
         return preis;
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("#,##0.00 €");
+        return buchID + " | " + titel + " (" + autor + ") | " +
+                df.format(preis) + " | " +
+                (gelesen ? "gelesen" : "neu");
     }
 
     public Buch clone() {

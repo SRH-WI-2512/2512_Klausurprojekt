@@ -17,6 +17,11 @@ public class Autor  {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public Autor clone(){
         return new Autor(getAutorID(), getName());
     }

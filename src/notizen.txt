@@ -1,3 +1,23 @@
+Feature Freeze (13.02.2023)
+---------------------------
++ Button "Alle Bücher dieses Autors" -> ListView
+- Auflistung aller Bücher
+- Auflistung aller Autoren
+- Auflistung aller gelesener/nicht-gelesener Bücher
++ Gesamtwert aller Bücher (entweder nur gelesen oder alle)
+- Gesamtmenge aller Bücher (Statistik)
+- Buch löschen (ohne Autor zu löschen)
+- Buttons um vorwärts und rückwärts durch die Bücher zu iterieren
++ Autorenfeld als Kombobox
+- Beenden-Button entfernen
+-
+
+
+
+
+
+
+
 Thema: Bücherverwaltung
 Klassen:
      Autor:

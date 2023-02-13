@@ -4,11 +4,11 @@ import dao.BücherAutorDAO;
 import dao.TempDAO;
 import model.Autor;
 import model.Buch;
+import view.AlleBücherDesAutorsView;
 import view.MainView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MainController {
 
@@ -21,6 +21,21 @@ public class MainController {
 
         mainView.setAnzeigenButtonListener( this::performAnzeigen );
         mainView.setSpeichernButtonListener( this::performSpeichern );
+        mainView.setAlleBücherDesAutorsButtonListener( this::performAlleBücherDesAutors );
+    }
+
+    private void performAlleBücherDesAutors(ActionEvent actionEvent) {
+        String autorName = mainView.getAutor();
+        AlleBücherDesAutorsView alleBücherDesAutorsView = new AlleBücherDesAutorsView();
+
+        DefaultListModel<Buch> bücherModel = new DefaultListModel<>();
+        for (Buch buch : bücherAutorDB.getAllBücher()) {
+            if (buch.getAutor().getName().equals(autorName))
+                bücherModel.addElement(buch);
+        }
+        alleBücherDesAutorsView.setBücherListDefaultModel(bücherModel);
+
+
     }
 
     private void performSpeichern(ActionEvent actionEvent) {
