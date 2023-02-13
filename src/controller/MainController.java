@@ -5,6 +5,7 @@ import dao.TempDAO;
 import model.Autor;
 import model.Buch;
 import view.AlleBücherDesAutorsView;
+import view.GesamtWertView;
 import view.MainView;
 
 import javax.swing.*;
@@ -22,6 +23,32 @@ public class MainController {
         mainView.setAnzeigenButtonListener( this::performAnzeigen );
         mainView.setSpeichernButtonListener( this::performSpeichern );
         mainView.setAlleBücherDesAutorsButtonListener( this::performAlleBücherDesAutors );
+        mainView.setPreisDerBücherButtonListener( this::performPreisDerBücher );
+    }
+
+    private void performPreisDerBücher(ActionEvent actionEvent) {
+        GesamtWertView gesamtWertView = new GesamtWertView();
+        mainView.setEnabled(false);
+
+        int anzahlGeleseneBücher = 0;
+        int anzahlAlleBücher = 0;
+        double preisGeleseneBücher = 0.0;
+        double preisAlleBücher = 0.0;
+        for (Buch buch : bücherAutorDB.getAllBücher()) {
+            if (buch.isGelesen()) {
+                anzahlGeleseneBücher++;
+                preisGeleseneBücher += buch.getPreis();
+            }
+            preisAlleBücher += buch.getPreis();
+            anzahlAlleBücher++;
+        }
+
+        gesamtWertView.setAnzahlGeleseneBücher( anzahlGeleseneBücher );
+        gesamtWertView.setPreisGeleseneBücher( preisGeleseneBücher );
+        gesamtWertView.setAnzahlAlleBücher( anzahlAlleBücher );
+        gesamtWertView.setPreisAlleBücher( preisAlleBücher );
+
+        gesamtWertView.addListener(mainView);
     }
 
     private void performAlleBücherDesAutors(ActionEvent actionEvent) {

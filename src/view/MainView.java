@@ -16,6 +16,7 @@ public class MainView extends View {
     private JTextField preisFeld;
     private JCheckBox gelesenBox;
     private JButton alleBücherDesAutorsButton;
+    private JButton preisDerBücherButton;
 
     public MainView() {
         super("Bücherverwaltung");
@@ -43,12 +44,14 @@ public class MainView extends View {
         speichernButton = new JButton("Speichern");
         alleBücherDesAutorsButton = new JButton("Publikationen");
         alleBücherDesAutorsButton.setToolTipText("Alle Bücher dieses Autors anzeigen");
+        preisDerBücherButton = new JButton("Preisübersicht");
 
         JButton beendenButton = new JButton("Beenden");
         beendenButton.addActionListener( (e) -> dispose() );
         bottomPanel.add(anzeigenButton);
         bottomPanel.add(speichernButton);
         bottomPanel.add(alleBücherDesAutorsButton);
+        bottomPanel.add(preisDerBücherButton);
         bottomPanel.add(beendenButton);
     }
 
@@ -128,6 +131,10 @@ public class MainView extends View {
 
     public void setAlleBücherDesAutorsButtonListener(ActionListener listener) {
         alleBücherDesAutorsButton.addActionListener(listener);
+    }
+
+    public void setPreisDerBücherButtonListener(ActionListener listener) {
+        preisDerBücherButton.addActionListener(listener);
     }
 
     public void zeigeFehlermeldung(String message) {
