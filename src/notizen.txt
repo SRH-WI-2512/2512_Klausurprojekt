@@ -7,7 +7,7 @@ Feature Freeze (13.02.2023)
 + Gesamtwert aller Bücher (unterteilt in gelesen und alle)
 - Gesamtmenge aller Bücher (Statistik)
 - Buch löschen (ohne Autor zu löschen)
-- Buttons um vorwärts und rückwärts durch die Bücher zu iterieren
++ Buttons um vorwärts und rückwärts durch die Bücher zu iterieren
 + Autorenfeld als Kombobox
 - Beenden-Button entfernen
 -

@@ -8,13 +8,8 @@ import java.util.List;
 
 
 public class TempDAO implements BücherAutorDAO {
-
     private List<Autor> autorDB = new ArrayList<>();
     private List<Buch> buchDB = new ArrayList<>();
-
-    private int letzteVergebeneBuchID = 0;
-    private int letzteVergebeneAutorID = 0;
-
 
     public TempDAO() {
         Autor a1 = new Autor( nächsteAutorID(), "Jack London" );
@@ -34,13 +29,11 @@ public class TempDAO implements BücherAutorDAO {
     }
 
     public int nächsteAutorID() {
-        ++letzteVergebeneAutorID;
-        return letzteVergebeneAutorID;
+        return letzteAktuelleAutorID() + 1;
     }
 
     public int nächsteBuchID() {
-        ++letzteVergebeneBuchID;
-        return letzteVergebeneBuchID;
+        return letzteAktuelleBuchID() + 1;
     }
 
     private Buch searchBuch(int buchID) {
@@ -149,11 +142,21 @@ public class TempDAO implements BücherAutorDAO {
 
     @Override
     public int letzteAktuelleAutorID() {
-        return letzteVergebeneAutorID;
+        int höchsteAutorID = 0;
+        for (Autor autor : autorDB) {
+            if (autor.getAutorID() > höchsteAutorID)
+                höchsteAutorID = autor.getAutorID();
+        }
+        return höchsteAutorID;
     }
 
     public int letzteAktuelleBuchID() {
-        return letzteVergebeneBuchID;
+        int höchsteBuchID = 0;
+        for (Buch buch : buchDB) {
+            if (buch.getBuchID() > höchsteBuchID)
+                höchsteBuchID = buch.getBuchID();
+        }
+        return höchsteBuchID;
     }
 
 }

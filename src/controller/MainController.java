@@ -30,6 +30,21 @@ public class MainController {
         mainView.setSpeichernButtonListener( this::performSpeichern );
         mainView.setAlleBücherDesAutorsButtonListener( this::performAlleBücherDesAutors );
         mainView.setPreisDerBücherButtonListener( this::performPreisDerBücher );
+        mainView.setVorwärtsButtonListener( this::performVorwärts );
+    }
+
+    private void performVorwärts(ActionEvent actionEvent) {
+        int buchnummer = mainView.getBuchnummer();
+        while (true) {
+            buchnummer++;
+            if (buchnummer > bücherAutorDB.letzteAktuelleBuchID())
+                return;
+            Buch buch = bücherAutorDB.getBuchByID(buchnummer);
+            if (buch != null) {
+                zeigeBuch(buch);
+                break;
+            }
+        }
     }
 
     private void performPreisDerBücher(ActionEvent actionEvent) {

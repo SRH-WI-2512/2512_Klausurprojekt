@@ -17,6 +17,7 @@ public class MainView extends View {
     private JCheckBox gelesenBox;
     private JButton alleBücherDesAutorsButton;
     private JButton preisDerBücherButton;
+    private JButton vorwärtsButton, rückwärtsButton;
 
     public MainView() {
         super("Bücherverwaltung");
@@ -45,14 +46,18 @@ public class MainView extends View {
         alleBücherDesAutorsButton = new JButton("Publikationen");
         alleBücherDesAutorsButton.setToolTipText("Alle Bücher dieses Autors anzeigen");
         preisDerBücherButton = new JButton("Preisübersicht");
+        vorwärtsButton = new JButton("->");
+        rückwärtsButton = new JButton("<-");
 
         JButton beendenButton = new JButton("Beenden");
         beendenButton.addActionListener( (e) -> dispose() );
+        bottomPanel.add(rückwärtsButton);
         bottomPanel.add(anzeigenButton);
         bottomPanel.add(speichernButton);
         bottomPanel.add(alleBücherDesAutorsButton);
         bottomPanel.add(preisDerBücherButton);
         bottomPanel.add(beendenButton);
+        bottomPanel.add(vorwärtsButton);
     }
 
     private void addCenterComponents(JPanel centerPanel) {
@@ -152,6 +157,14 @@ public class MainView extends View {
 
     public void setPreisDerBücherButtonListener(ActionListener listener) {
         preisDerBücherButton.addActionListener(listener);
+    }
+
+    public void setVorwärtsButtonListener(ActionListener listener) {
+        vorwärtsButton.addActionListener(listener);
+    }
+
+    public void setRückwärtsButtonListener(ActionListener listener) {
+        rückwärtsButton.addActionListener(listener);
     }
 
     public void zeigeFehlermeldung(String message) {
