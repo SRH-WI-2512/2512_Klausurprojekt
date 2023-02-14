@@ -20,6 +20,12 @@ public class MainController {
         this.bücherAutorDB = bücherAutorDB;
         this.mainView = mainView;
 
+        DefaultComboBoxModel<String> autorModel = new DefaultComboBoxModel<>();
+        for (Autor autor : bücherAutorDB.getAllAutoren()) {
+            autorModel.addElement( autor.getName() );
+        }
+        mainView.setAutorBoxModel(autorModel);
+
         mainView.setAnzeigenButtonListener( this::performAnzeigen );
         mainView.setSpeichernButtonListener( this::performSpeichern );
         mainView.setAlleBücherDesAutorsButtonListener( this::performAlleBücherDesAutors );
@@ -61,8 +67,6 @@ public class MainController {
                 bücherModel.addElement(buch);
         }
         alleBücherDesAutorsView.setBücherListDefaultModel(bücherModel);
-
-
     }
 
     private void performSpeichern(ActionEvent actionEvent) {
@@ -100,6 +104,9 @@ public class MainController {
         String autorname = mainView.getAutor();
         double preis = mainView.getPreis();
         boolean gelesen = mainView.istGelesen();
+
+        // damit der Autor auch in der KomboBox landet
+        mainView.setAutor(autorname);
 
         Autor autor;
         int autorID = bücherAutorDB.getIDByAutorName(autorname);

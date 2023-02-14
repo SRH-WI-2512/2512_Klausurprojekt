@@ -12,7 +12,7 @@ public class MainView extends View {
     private JButton anzeigenButton, speichernButton;
     private JTextField buchnummerFeld;
     private JTextField buchtitelFeld;
-    private JTextField autorFeld;
+    private JComboBox<String> autorBox;
     private JTextField preisFeld;
     private JCheckBox gelesenBox;
     private JButton alleBücherDesAutorsButton;
@@ -61,7 +61,8 @@ public class MainView extends View {
 
         buchnummerFeld = new JTextField();
         buchtitelFeld = new JTextField();
-        autorFeld = new JTextField();
+        autorBox = new JComboBox<>();
+        autorBox.setEditable(true);
         preisFeld = new JTextField();
         gelesenBox = new JCheckBox("Gelesen");
 
@@ -70,7 +71,7 @@ public class MainView extends View {
         centerPanel.add(new JLabel("Buchtitel:"));
         centerPanel.add( buchtitelFeld );
         centerPanel.add(new JLabel("Autor:"));
-        centerPanel.add( autorFeld );
+        centerPanel.add( autorBox );
         centerPanel.add(new JLabel("Preis:"));
         centerPanel.add( preisFeld );
         centerPanel.add(new JLabel() ); // Platzhalter
@@ -96,11 +97,23 @@ public class MainView extends View {
     }
 
     public void setAutor(String autor) {
-        autorFeld.setText(autor);
+        if (autor.isEmpty()) {
+            autorBox.setSelectedIndex(0);
+            return;
+        }
+
+        for (int i=0; i <  autorBox.getItemCount(); i++) {
+            if (autorBox.getItemAt(i).equals(autor)) {
+                autorBox.setSelectedIndex(i);
+                return;
+            }
+        }
+        autorBox.addItem(autor);
+        autorBox.setSelectedIndex( autorBox.getItemCount()-1 );
     }
 
     public String getAutor() {
-        return autorFeld.getText();
+        return (String)autorBox.getSelectedItem();
     }
 
     public void setPreis(double preis) {
@@ -119,6 +132,10 @@ public class MainView extends View {
 
     public boolean istGelesen() {
         return gelesenBox.isSelected();
+    }
+
+    public void setAutorBoxModel(DefaultComboBoxModel<String> defaultModel) {
+        autorBox.setModel(defaultModel);
     }
 
     public void setAnzeigenButtonListener(ActionListener listener) {
