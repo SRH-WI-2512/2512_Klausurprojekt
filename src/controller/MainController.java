@@ -16,6 +16,7 @@ public class MainController {
     private final BücherAutorDAO bücherAutorDB;
     private final MainView mainView;
 
+
     public MainController(BücherAutorDAO bücherAutorDB, MainView mainView) {
         this.bücherAutorDB = bücherAutorDB;
         this.mainView = mainView;
@@ -31,6 +32,21 @@ public class MainController {
         mainView.setAlleBücherDesAutorsButtonListener( this::performAlleBücherDesAutors );
         mainView.setPreisDerBücherButtonListener( this::performPreisDerBücher );
         mainView.setVorwärtsButtonListener( this::performVorwärts );
+        mainView.setRückwärtsButtonListener( this::performRückwärts );
+    }
+
+    private void performRückwärts(ActionEvent actionEvent) {
+        int buchnummer = mainView.getBuchnummer();
+        while (true) {
+            buchnummer--;
+            if (buchnummer <= 0)
+                return;
+            Buch buch = bücherAutorDB.getBuchByID(buchnummer);
+            if (buch != null) {
+                zeigeBuch(buch);
+                break;
+            }
+        }
     }
 
     private void performVorwärts(ActionEvent actionEvent) {

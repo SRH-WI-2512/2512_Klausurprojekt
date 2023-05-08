@@ -11,7 +11,7 @@ public class AlleBücherDesAutorsView extends View {
     private JList<Buch> bücherList;
 
     public AlleBücherDesAutorsView() {
-        super("Liste aller Autoren");
+        super("Liste der Bücher des Autors");
         getRootPane().setBorder( new EmptyBorder(5,5,5,5) );
 
         JScrollPane scrollPane = new JScrollPane();

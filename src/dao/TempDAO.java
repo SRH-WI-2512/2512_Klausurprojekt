@@ -13,11 +13,10 @@ public class TempDAO implements BücherAutorDAO {
 
     public TempDAO() {
         Autor a1 = new Autor( nächsteAutorID(), "Jack London" );
-        Autor a2 = new Autor( nächsteAutorID(), "Astrid Lindgren" );
-        Autor a3 = new Autor( nächsteAutorID(), "E.T.A. Hoffmann" );
-
         insertAutor(a1);
+        Autor a2 = new Autor( nächsteAutorID(), "Astrid Lindgren" );
         insertAutor(a2);
+        Autor a3 = new Autor( nächsteAutorID(), "E.T.A. Hoffmann" );
         insertAutor(a3);
 
         insertBuch( new Buch(nächsteBuchID(), "Wolfsblut", a1, 9.99, false) );
