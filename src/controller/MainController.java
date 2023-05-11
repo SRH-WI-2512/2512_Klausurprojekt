@@ -10,6 +10,9 @@ import view.MainView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
 
@@ -33,6 +36,56 @@ public class MainController {
         mainView.setPreisDerBücherButtonListener( this::performPreisDerBücher );
         mainView.setVorwärtsButtonListener( this::performVorwärts );
         mainView.setRückwärtsButtonListener( this::performRückwärts );
+        mainView.setZufallsButtonListener( this::performZufall );
+    }
+
+    private void performZufall(ActionEvent actionEvent) {
+        int buchnummer = (int)(Math.random() * 900) + 100;
+        double preis = Math.random() * 90 + 10;
+        boolean gelesen = Math.random() > 0.5;
+        Buch tempBuch = generierenZufallsBuch();
+
+        zeigeBuch( new Buch(buchnummer, tempBuch.getTitel(), tempBuch.getAutor(),
+                preis, gelesen) );
+    }
+
+    private Buch generierenZufallsBuch() {
+        List<String> titelListe = new ArrayList<>();
+        File titelDatei = new File("titelliste.txt");
+        try {
+            FileReader leseDatei = new FileReader(titelDatei);
+            BufferedReader leseBuffer = new BufferedReader(leseDatei);
+            while (true) {
+                String zeile = leseBuffer.readLine();
+                if (zeile == null) break;
+                titelListe.add( zeile );
+            }
+        }
+        catch (IOException e) {
+            System.err.println("Probleme!");
+            e.printStackTrace();
+        }
+
+        int titelIndex = (int)(Math.random() * titelListe.size());
+        String buchtitel = titelListe.get(titelIndex);
+
+        String[] buchteile = buchtitel.trim().split(", ");
+        String autor = "Unbekannt";
+
+        if (buchteile.length > 1) {
+            int i = buchteile[1].length() - 1;
+            while (i > 0 && unnötigesZeichen(buchteile[1].charAt(i))) i--;
+            autor = buchteile[1].substring(0, i + 1);
+        }
+
+        return new Buch(0, buchteile[0], new Autor(0, autor), 0.0, false );
+    }
+
+    private boolean unnötigesZeichen(char zeichen) {
+        if (zeichen >= '0' && zeichen <= '9') return true;
+        if (zeichen == ',' || zeichen == '/') return true;
+        if (zeichen == ' ') return true;
+        return false;
     }
 
     private void performRückwärts(ActionEvent actionEvent) {

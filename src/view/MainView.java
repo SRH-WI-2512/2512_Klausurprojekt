@@ -18,6 +18,7 @@ public class MainView extends View {
     private JButton alleBücherDesAutorsButton;
     private JButton preisDerBücherButton;
     private JButton vorwärtsButton, rückwärtsButton;
+    private JButton zufallsButton;
 
     public MainView() {
         super("Bücherverwaltung");
@@ -80,7 +81,12 @@ public class MainView extends View {
         centerPanel.add(new JLabel("Preis:"));
         centerPanel.add( preisFeld );
         centerPanel.add(new JLabel() ); // Platzhalter
-        centerPanel.add( gelesenBox );
+
+        zufallsButton = new JButton("ZUFALL");
+        JPanel specialPanel = new JPanel( new GridLayout(1,2) );
+        specialPanel.add( gelesenBox );
+        specialPanel.add( zufallsButton );
+        centerPanel.add( specialPanel );
     }
 
     public int getBuchnummer() {
@@ -165,6 +171,10 @@ public class MainView extends View {
 
     public void setRückwärtsButtonListener(ActionListener listener) {
         rückwärtsButton.addActionListener(listener);
+    }
+
+    public void setZufallsButtonListener(ActionListener listener) {
+        zufallsButton.addActionListener(listener);
     }
 
     public void zeigeFehlermeldung(String message) {
